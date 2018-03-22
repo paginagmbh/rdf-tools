@@ -8,7 +8,8 @@
     "lint": "eslint bin/*.js lib/*.js"
   },
   "bin": {
-    "rdf-stream": "./bin/stream.js"
+    "rdf-stream": "./bin/stream.js",
+    "rdf-fuseki-load": "./bin/fuseki-load.js"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
