@@ -1,6 +1,6 @@
 {
-  "name": "rdf-replication",
-  "version": "1.0.0",
+  "name": "rdf-tools",
+  "version": "1.0.1",
   "description": "Replication of RDF Databases",
   "license": "UNLICENSED",
   "private": true,
