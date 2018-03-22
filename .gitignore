@@ -1,0 +1,4 @@
+node_modules/
+.vagrant/
+provisioning/ubuntu-xenial-16.04-cloudimg-console.log
+provisioning/roles/*.*

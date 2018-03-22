@@ -1,0 +1,42 @@
+- hosts:
+    - default
+  gather_facts: False
+  pre_tasks:
+    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      register: output
+      changed_when: output.stdout != ""
+    - setup: # aka gather_facts
+  roles:
+    - geerlingguy.java
+    - geerlingguy.nodejs
+    - ocha.yarn
+    - geerlingguy.git
+    - role: geerlingguy.nginx
+      nginx_remove_default_vhost: true
+      nginx_extra_http_options: |
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+      nginx_upstreams:
+        - name: fuseki
+          servers: [ "localhost:3030" ]
+      nginx_vhosts:
+        - listen: "80 default_server"
+          server_name: "vm.local"
+          root: "/var/www"
+          extra_parameters: |
+            sendfile off;
+
+            charset UTF-8;
+
+            location / {
+              proxy_read_timeout 3600;
+              proxy_connect_timeout 400;
+              proxy_pass http://fuseki;
+            }
+    - role: pagina.fuseki
+      fuseki_configurations:
+        - name: "db"

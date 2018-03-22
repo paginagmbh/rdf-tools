@@ -1,0 +1,29 @@
+{
+  "name": "rdf-replication",
+  "version": "1.0.0",
+  "description": "Replication of RDF Databases",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "lint": "eslint bin/*.js lib/*.js"
+  },
+  "bin": {
+    "rdf-stream": "./bin/stream.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "bunyan": "^1.8.12",
+    "del": "^3.0.0",
+    "fs-extra": "^5.0.0",
+    "globby": "^8.0.1",
+    "minimist": "^1.2.0",
+    "n3": "https://github.com/gremid/N3.js.git",
+    "request": "^2.85.0",
+    "through": "^2.3.8",
+    "tmp": "^0.0.33",
+    "unzip": "^0.1.11"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.2"
+  }
+}
