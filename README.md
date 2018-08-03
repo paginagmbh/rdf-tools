@@ -1,3 +1,9 @@
+# ECMAScript Tools for RDF datasets
+
+## License
+
+BSD
+
 ## Usage
 
 ### Streaming RDF datasets
@@ -16,3 +22,7 @@ $ rdf-stream\
 ``` shell
 $ rdf-stream gnd getty-aat iconclass | tdbloader --loc authority-db
 ```
+
+## Author Information
+
+This library was created in 2018 by [Pagina GmbH](https://www.pagina.gmbh/).
