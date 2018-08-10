@@ -1,5 +1,8 @@
+.dir-locals.el
+.vagrant/
+
 dist/
 node_modules/
-.vagrant/
+
 provisioning/*.log
 provisioning/roles/
