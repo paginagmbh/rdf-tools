@@ -1,54 +1,41 @@
 path = require "path"
-{ PassThrough } = require "stream"
 
-cliArgs = (require "minimist") process.argv[2..]
+miss = require "mississippi"
+N3 = require "n3"
 
-cli = require "./cli"
-n3Stream = require "./n3-stream"
+defaultArgs = { format: "N-Quads" }
+args = (require "minimist") process.argv[2..]
 
-standardDatasets = path.resolve __dirname, "..", "lib", "datasets"
+{ format, subset, graph } = { defaultArgs..., args... }
 
-optional = (spec) ->
-    try
-        require spec
-    catch err
-        undefined
+[ dataset ] = args._
+process.exit 2 unless dataset
 
-resolvers = [
-    (spec) -> optional spec,
-    (spec) -> optional path.resolve standardDatasets, spec
-    (url) -> if (url.search /^https?:\/\//) is 0 then { url } else undefined
-    (path) -> { path }
-    ]
+nt2nq = require "./nt2nq"
+iconclass = require "./iconclass"
+gnd = require "./gnd"
+getty = require "./getty"
 
-resolve = (spec) -> resolvers.reduce ((res, resolver) -> res ?= resolver spec), null
+to = miss.pipeline.obj N3.StreamWriter({ format }), process.stdout
+cb = (err) ->
+    console.error err if err?
+    process.exitCode = if err? then 1 else 0
 
-{ unparsed, format } = { unparsed: false, format: "N-Quads", cliArgs... }
+switch dataset
+    when "iconclass"
+        miss.pipe iconclass.stream(), iconclass.parsed(), to, cb
+    when "gnd"
+        miss.pipe gnd.stream(), gnd.parsed(), to, cb
+    when "getty"
+        to = miss.pipeline.obj getty.parsed(), to
+        subset = switch subset
+            when "subjects" then getty.subjects
+            when "hierarchy" then getty.hierarchy
 
-parsed = not unparsed
-datasets = (resolve ds for ds in cliArgs._)
-datasets = ({ parsed, ds... } for ds in datasets when ds?)
-
-process.exit 0 if datasets.length is 0
-
-cli () ->
-    source = new PassThrough { objectMode: parsed }
-    stream = source
-
-    stream = stream.pipe (n3Stream.write { format }) if parsed
-
-    stream = stream.pipe process.stdout, { end: false }
-
-    n3Stream.read datasets.shift()
-        .on "end", () ->
-            next = datasets.shift()
-            if next
-                (n3Stream.read next).pipe source, { end: false}
-            else
-                source.end()
-        .pipe source, { end: false }
-        .on "error", (err) -> source.emit "error", err
-
-    new Promise (resolve, reject) ->
-        stream.on "finish", resolve
-        stream.on "error", reject
+        getty.aat to, subset
+        to.on "error", cb
+    when "-"
+        to = miss.pipeline.obj nt2nq(graph), to if graph?
+        miss.pipe process.stdin, N3.StreamParser(), to, cb
+    else
+        cb "Unknown dataset: #{dataset}"

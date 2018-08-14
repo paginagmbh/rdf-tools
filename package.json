@@ -2,24 +2,27 @@
   "name": "rdf-tools",
   "version": "2.0.0",
   "description": "Replication of RDF Databases",
-  "license": "UNLICENSED",
+  "license": "BSD",
   "private": true,
   "engines": {
     "node": ">=8.6"
   },
   "bin": {
     "rdf-stream": "./bin/stream.js",
-    "rdf-fuseki-load": "./bin/fuseki-load.js"
+    "rdf-tdb-loader": "./bin/tdb-loader.js"
   },
   "scripts": {
-    "prepare": "coffee --compile --map --output dist/ lib/"
+    "prepare": "coffee --compile --map --output dist/ lib/",
+    "test": "mocha test/*.coffee"
   },
   "dependencies": {
     "coffeescript": "^2.3.1",
+    "debug": "^3.1.0",
     "fs-extra": "^5.0.0",
     "minimist": "^1.2.0",
     "mississippi": "^3.0.0",
-    "n3": "https://github.com/gremid/N3.js.git",
+    "mocha": "^5.2.0",
+    "n3": "^1.0.0-beta.1",
     "request": "^2.85.0",
     "unzip": "^0.1.11"
   }

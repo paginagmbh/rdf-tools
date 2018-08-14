@@ -1,25 +1,26 @@
-assert = require "assert"
 path = require "path"
 cp = require "child_process"
-
 xfs = require "fs-extra"
 minimist = require "minimist"
-
-cli = require "./cli"
 
 args = minimist process.argv[2..]
 { test } = args
 [ database ] = args._
-assert.ok database, "No database specified"
+process.exit 1 unless database
 
 cwd = process.cwd()
 encoding = "utf8"
 
 fusekiBase = process.env.FUSEKI_BASE or cwd
+fusekiHome = process.env.FUSEKI_HOME
+
 databases = path.resolve fusekiBase, "databases"
+tdbloader = if fusekiHome then path.resolve fusekiHome, "bin", "tdbloader"
+tdbloader ?= "tdbloader"
+
 
 spawn = (cmd, args, opts={}) ->
-  opts = { cwd, encoding, stdio: "inherit", opts... }
+  opts = { cwd, encoding, stdio: "inherit", shell: true, opts... }
   result = cp.spawnSync cmd, args, opts
   process.exit result.status unless result.status is 0
   result
@@ -29,11 +30,11 @@ spawn = (cmd, args, opts={}) ->
 
 remove = (dir) -> (xfs.remove dir).then (() -> dir), (() -> dir)
 
-cli () ->
+load = () ->
     await remove dest
     await xfs.ensureDir dest
 
-    spawn "tdbloader", ["--loc", dest]
+    spawn tdbloader, ["--loc", dest]
 
     unless test
         spawn "sudo", ["systemctl", "stop", "fuseki.service"]
@@ -44,3 +45,5 @@ cli () ->
         await xfs.move dest, live
 
         spawn "sudo", ["systemctl", "start", "fuseki.service"]
+
+load()
