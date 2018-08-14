@@ -9,18 +9,14 @@ BSD
 ### Streaming RDF datasets
 
 ``` shell
-$ rdf-stream\
-    iconclass\
-    getty-aat-hierarchy\
-    ./local/data.ttl\
-    http://authority.net/dump.nq\
-    >combined-dataset.nq
+$ rdf-stream iconclass
+$ curl https://net.org/xyz.gz | gunzip | rdf-stream --graph urn:test -
 ```
 
 ### Loading datasets into Apache Jena TDB
 
 ``` shell
-$ rdf-stream gnd getty-aat iconclass | tdbloader --loc authority-db
+$ rdf-stream iconclass | rdf-tdb-loader authority-db
 ```
 
 ## Author Information
