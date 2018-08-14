@@ -12,12 +12,7 @@ cwd = process.cwd()
 encoding = "utf8"
 
 fusekiBase = process.env.FUSEKI_BASE or cwd
-fusekiHome = process.env.FUSEKI_HOME
-
 databases = path.resolve fusekiBase, "databases"
-tdbloader = if fusekiHome then path.resolve fusekiHome, "bin", "tdbloader"
-tdbloader ?= "tdbloader"
-
 
 spawn = (cmd, args, opts={}) ->
   opts = { cwd, encoding, stdio: "inherit", shell: true, opts... }
@@ -34,7 +29,7 @@ load = () ->
     await remove dest
     await xfs.ensureDir dest
 
-    spawn tdbloader, ["--loc", dest]
+    spawn "tdbloader", ["--loc", dest]
 
     unless test
         spawn "sudo", ["systemctl", "stop", "fuseki.service"]
