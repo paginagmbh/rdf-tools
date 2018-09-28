@@ -11,9 +11,7 @@ url = [
     "?cmd=fetch&userID=opendata&pass=opendata&mabheft=GND.ttl.gz"].join ""
 
 module.exports =
-    stream: () -> miss.pipe [
-        request { url }
-         zlib.createGunzip()]
+    stream: (cb) -> miss.pipe request({ url }), zlib.createGunzip(), cb
 
     parsed: () ->
         miss.pipeline.obj N3.StreamParser(), (nt2nq "http://d-nb.info/gnd/")
