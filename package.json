@@ -9,6 +9,7 @@
   },
   "bin": {
     "rdf-stream": "./bin/stream.js",
+    "rdf-reason": "./bin/reason.js",
     "rdf-tdb-loader": "./bin/tdb-loader.js"
   },
   "scripts": {
