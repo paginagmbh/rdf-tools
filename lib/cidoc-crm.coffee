@@ -5,7 +5,7 @@ request = require "request"
 { RdfXmlParser } = require "rdfxml-streaming-parser"
 nt2nq = require "./nt2nq"
 
-url = "http://erlangen-crm.org/ontology/ecrm/ecrm_170309.owl"
+url = "http://erlangen-crm.org/ontology/ecrm/ecrm_140617.owl"
 
 module.exports =
     stream: () ->
@@ -13,4 +13,4 @@ module.exports =
 
     parsed: () ->
         miss.pipeline.obj new RdfXmlParser(),
-            (nt2nq "http://erlangen-crm.org/170309/")
+            (nt2nq "http://erlangen-crm.org/140617/")
