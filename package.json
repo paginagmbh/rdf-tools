@@ -26,6 +26,6 @@
     "n3": "^1.0.0-beta.1",
     "rdfxml-streaming-parser": "^1.0.0",
     "request": "^2.85.0",
-    "unzip": "^0.1.11"
+    "unzipper": "^0.10.5"
   }
 }

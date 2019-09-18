@@ -1,7 +1,7 @@
 N3 = require "n3"
 miss = require "mississippi"
 request = require "request"
-unzip = require "unzip"
+unzipper = require "unzipper"
 
 debug = require "debug"
 log = debug "rdf-tools:getty"
@@ -18,7 +18,7 @@ aatFilter = (components...) ->
 
 aat = (to, filter=aatFilter(), cb) ->
     source = request { url }
-    extract = unzip.Parse()
+    extract = unzipper.Parse()
         .on "entry" , (entry) ->
             if filter entry
                 log "+ %o", entry

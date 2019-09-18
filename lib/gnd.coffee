@@ -6,9 +6,7 @@ request = require "request"
 
 nt2nq = require "./nt2nq"
 
-url = [
-    "http://datendienst.dnb.de/cgi-bin/mabit.pl"
-    "?cmd=fetch&userID=opendata&pass=opendata&mabheft=GND.ttl.gz"].join ""
+url = "https://data.dnb.de/opendata/authorities-person_lds.ttl.gz"
 
 module.exports =
     stream: (cb) -> miss.pipe request({ url }), zlib.createGunzip(), cb
