@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "cidoc-crm.js",
+  "sourceRoot": "..",
+  "sources": [
+    "lib/cidoc-crm.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA,EAAA,EAAA,YAAA,EAAA,IAAA,EAAA,KAAA,EAAA,OAAA,EAAA;;EAAA,EAAA,GAAK,OAAA,CAAQ,IAAR;;EACL,IAAA,GAAO,OAAA,CAAQ,aAAR;;EACP,OAAA,GAAU,OAAA,CAAQ,SAAR;;EAEV,CAAA,CAAE,YAAF,CAAA,GAAmB,OAAA,CAAQ,yBAAR,CAAnB;;EACA,KAAA,GAAQ,OAAA,CAAQ,SAAR;;EAER,GAAA,GAAM;;EAEN,MAAM,CAAC,OAAP,GACI;IAAA,MAAA,EAAQ,QAAA,CAAA,CAAA;aACJ,OAAA,CAAQ,CAAE,GAAF,CAAR;IADI,CAAR;IAGA,MAAA,EAAQ,QAAA,CAAA,CAAA;aACJ,IAAI,CAAC,QAAQ,CAAC,GAAd,CAAkB,IAAI,YAAJ,CAAA,CAAlB,EACK,KAAA,CAAM,iCAAN,CADL;IADI;EAHR;AAVJ",
+  "sourcesContent": [
+    "N3 = require \"n3\"\nmiss = require \"mississippi\"\nrequest = require \"request\"\n\n{ RdfXmlParser } = require \"rdfxml-streaming-parser\"\nnt2nq = require \"./nt2nq\"\n\nurl = \"http://erlangen-crm.org/ontology/ecrm/ecrm_140617.owl\"\n\nmodule.exports =\n    stream: () ->\n        request { url }\n\n    parsed: () ->\n        miss.pipeline.obj new RdfXmlParser(),\n            (nt2nq \"http://erlangen-crm.org/140617/\")"
+  ]
+}

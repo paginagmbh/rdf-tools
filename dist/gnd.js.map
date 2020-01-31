@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "gnd.js",
+  "sourceRoot": "..",
+  "sources": [
+    "lib/gnd.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA,EAAA,EAAA,IAAA,EAAA,KAAA,EAAA,OAAA,EAAA,GAAA,EAAA;;EAAA,IAAA,GAAO,OAAA,CAAQ,MAAR;;EAEP,EAAA,GAAK,OAAA,CAAQ,IAAR;;EACL,IAAA,GAAO,OAAA,CAAQ,aAAR;;EACP,OAAA,GAAU,OAAA,CAAQ,SAAR;;EAEV,KAAA,GAAQ,OAAA,CAAQ,SAAR;;EAER,GAAA,GAAM;;EAEN,MAAM,CAAC,OAAP,GACI;IAAA,MAAA,EAAQ,QAAA,CAAC,EAAD,CAAA;aAAQ,IAAI,CAAC,IAAL,CAAU,OAAA,CAAQ,CAAE,GAAF,CAAR,CAAV,EAA4B,IAAI,CAAC,YAAL,CAAA,CAA5B,EAAiD,EAAjD;IAAR,CAAR;IAEA,MAAA,EAAQ,QAAA,CAAA,CAAA;aACJ,IAAI,CAAC,QAAQ,CAAC,GAAd,CAAkB,EAAE,CAAC,YAAH,CAAA,CAAlB,EAAsC,KAAA,CAAM,uBAAN,CAAtC;IADI;EAFR;AAXJ",
+  "sourcesContent": [
+    "zlib = require \"zlib\"\n\nN3 = require \"n3\"\nmiss = require \"mississippi\"\nrequest = require \"request\"\n\nnt2nq = require \"./nt2nq\"\n\nurl = \"https://data.dnb.de/opendata/authorities-person_lds.ttl.gz\"\n\nmodule.exports =\n    stream: (cb) -> miss.pipe request({ url }), zlib.createGunzip(), cb\n\n    parsed: () ->\n        miss.pipeline.obj N3.StreamParser(), (nt2nq \"http://d-nb.info/gnd/\")\n"
+  ]
+}

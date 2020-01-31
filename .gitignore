@@ -1,7 +1,6 @@
 .dir-locals.el
 .vagrant/
 
-dist/
 node_modules/
 
 provisioning/*.log
