@@ -42,4 +42,4 @@ module.exports =
     hierarchy: aatFilter "1Subjects", "2Terms", "HierarchicalRels"
 
     parsed: () ->
-        miss.pipeline.obj N3.StreamParser(), (nt2nq "http://vocab.getty.edu/aat")
+        miss.pipeline.obj new N3.StreamParser(), (nt2nq "http://vocab.getty.edu/aat")

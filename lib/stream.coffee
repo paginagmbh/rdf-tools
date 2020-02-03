@@ -16,7 +16,7 @@ iconclass = require "./iconclass"
 gnd = require "./gnd"
 getty = require "./getty"
 
-to = miss.pipeline.obj N3.StreamWriter({ format }), process.stdout
+to = miss.pipeline.obj new N3.StreamWriter({ format }), process.stdout
 cb = (err) ->
     console.error err if err?
     process.exitCode = if err? then 1 else 0
@@ -36,6 +36,6 @@ switch dataset
         to.on "error", cb
     when "-"
         to = miss.pipeline.obj nt2nq(graph), to if graph?
-        miss.pipe process.stdin, N3.StreamParser(), to, cb
+        miss.pipe process.stdin, new N3.StreamParser(), to, cb
     else
         cb "Unknown dataset: #{dataset}"

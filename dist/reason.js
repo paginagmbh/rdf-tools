@@ -28,7 +28,7 @@
 
   crm = require("./cidoc-crm");
 
-  to = miss.pipeline.obj(N3.StreamWriter({format}), process.stdout);
+  to = miss.pipeline.obj(new N3.StreamWriter({format}), process.stdout);
 
   cb = function(err) {
     if (err != null) {
@@ -48,8 +48,8 @@
         }
       });
     }));
-    source = N3.StreamParser();
-    target = N3.StreamWriter({format});
+    source = new N3.StreamParser();
+    target = new N3.StreamWriter({format});
     reasoner = miss.duplex.obj(target, source);
     reasoner.on("data", function(stmt, _, next) {
       var graph, inverse, object, predicate, ref, results, subject;

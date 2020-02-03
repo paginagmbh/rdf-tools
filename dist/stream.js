@@ -30,7 +30,7 @@
 
   getty = require("./getty");
 
-  to = miss.pipeline.obj(N3.StreamWriter({format}), process.stdout);
+  to = miss.pipeline.obj(new N3.StreamWriter({format}), process.stdout);
 
   cb = function(err) {
     if (err != null) {
@@ -63,7 +63,7 @@
       if (graph != null) {
         to = miss.pipeline.obj(nt2nq(graph), to);
       }
-      miss.pipe(process.stdin, N3.StreamParser(), to, cb);
+      miss.pipe(process.stdin, new N3.StreamParser(), to, cb);
       break;
     default:
       cb(`Unknown dataset: ${dataset}`);

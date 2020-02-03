@@ -15,7 +15,7 @@ process.exit 2 unless ontology
 owl = require "./owl"
 crm = require "./cidoc-crm"
 
-to = miss.pipeline.obj N3.StreamWriter({ format }), process.stdout
+to = miss.pipeline.obj new N3.StreamWriter({ format }), process.stdout
 cb = (err) ->
     console.error err if err?
     process.exitCode = if err? then 1 else 0
@@ -28,8 +28,8 @@ cidocCrm = () ->
             miss.to.obj((triple, _, next) -> next())
             (err) -> reject err if err?
 
-    source = N3.StreamParser()
-    target = N3.StreamWriter({ format })
+    source = new N3.StreamParser()
+    target = new N3.StreamWriter({ format })
 
     reasoner = miss.duplex.obj target, source
     reasoner.on "data", (stmt, _, next) ->

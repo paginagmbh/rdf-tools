@@ -19,7 +19,7 @@
       return miss.pipe(request({url}), zlib.createGunzip(), cb);
     },
     parsed: function() {
-      return miss.pipeline.obj(N3.StreamParser(), nt2nq("http://d-nb.info/gnd/"));
+      return miss.pipeline.obj(new N3.StreamParser(), nt2nq("http://d-nb.info/gnd/"));
     }
   };
 

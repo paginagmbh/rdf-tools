@@ -13,4 +13,4 @@ module.exports =
         miss.pipe (request { url }), zlib.createGunzip(), cb
 
     parsed: () ->
-        miss.pipeline.obj N3.StreamParser(), (nt2nq "http://iconclass.org/")
+        miss.pipeline.obj new N3.StreamParser(), (nt2nq "http://iconclass.org/")
