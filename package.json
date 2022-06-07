@@ -1,6 +1,6 @@
 {
   "name": "rdf-tools",
-  "version": "3.1.5",
+  "version": "3.1.6",
   "description": "Replication of RDF Databases",
   "license": "BSD",
   "private": true,
